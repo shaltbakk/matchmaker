@@ -1,1 +1,174 @@
-<h1>Matchmaker</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+Author: Sindre Haltbakk
+Project: MatchmakerWeb Part 2
+
+All rights reserved.
+-->
+
+<head>
+
+    <style>
+        body {
+          background-color: #ff5e72;
+        }
+        </style>   
+    <meta charset="UTF-8">
+    <title>Matchmaker</title>  
+    <style>
+        body {
+            text-align: center;    
+        }
+        label {
+            display: inline-block;
+            text-align: left;
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+    <h1>Are YOU compatible with Sindre? Read on to find out !!</h1>
+        <p>The instructions are simple.  </p>
+        <p>1. Select your reponse to each of The Five Questions.</p>
+        <p>2. Click "Unveil my destiny." </p>
+        <p>3. Discover your destiny.</p>
+<h2>The Five Questions</h2>
+
+<label>Elvis is the greatest artist of all time.</label><br />
+<select id="q1">
+    <option value ="5">Strongly Agree</option>
+    <option value ="4">Agree</option>
+    <option value ="3">Neither agree nor disagree</option>
+    <option value ="2">Disagree</option>
+    <option value ="1">Strongly Disagree</option>
+</select>
+<br /><br />
+
+<label>Norway will obviously continue to embarrass every other country in the world in the next Winter Olympics.</label><br />
+<select id="q2">
+    <option value ="5">Strongly Agree</option>
+    <option value ="4">Agree</option>
+    <option value ="3">Neither agree nor disagree</option>
+    <option value ="2">Disagree</option>
+    <option value ="1">Strongly Disagree</option>
+</select>
+<br /><br />
+
+<label>Hamburger Dressing does not make the burger better.</label><br />
+<select id="q3">
+    <option value ="5">Strongly Agree</option>
+    <option value ="4">Agree</option>
+    <option value ="3">Neither agree nor disagree</option>
+    <option value ="2">Disagree</option>
+    <option value ="1">Strongly Disagree</option>
+</select>
+<br /><br />
+
+<label><a href="https://www.youtube.com/watch?v=3LmmCYxe5k0">Stampa med Leroy - old school</a>(NB. high volume!!) is all you need to master the dance floor. </label><br />
+<select id="q4">
+    <option value ="5">Strongly Agree</option>
+    <option value ="4">Agree</option>
+    <option value ="3">Neither agree nor disagree</option>
+    <option value ="2">Disagree</option>
+    <option value ="1">Strongly Disagree</option>
+</select>
+<br /><br />
+
+<label>Ketchup mixed with mayo is called "Fancy Sauce".</label><br />
+<select id="q5">
+    <option value ="5">Strongly Agree</option>
+    <option value ="4">Agree</option>
+    <option value ="3">Neither agree nor disagree</option>
+    <option value ="2">Disagree</option>
+    <option value ="1">Strongly Disagree</option>
+</select>
+<br /><br />
+
+<br /><br /><br />
+<button onclick="calculateCompatability()">Unveil my destiny</button>
+<p id="compatability"></p>
+
+<script>
+console.log("Starting Matchmaker...");
+
+function calculateCompatability() {
+    console.log("calculateCompatability()");
+ 
+    const DESIRED_RESPONSE = [
+		5, /* strongly agree */
+		5, /* strongly agree */
+		1, /* strongly disagree */
+        5, /* strongly agree */
+        3, /* neither agree nor disagree */
+    ]
+
+    const MAX_SCORE = 25;
+
+// Get the current values of the dropdown controls.
+    let question1Response = document.getElementById("q1").selectedOptions[0].value;
+	let question2Response = document.getElementById("q2").selectedOptions[0].value;
+	let question3Response = document.getElementById("q3").selectedOptions[0].value;
+	let question4Response = document.getElementById("q4").selectedOptions[0].value;
+	let question5Response = document.getElementById("q5").selectedOptions[0].value;
+
+// Optionally log the values associated with question 1 through 3 to the console. 
+    console.log("Question 1 Answers:");
+	console.log(document.getElementById("q1").selectedOptions[0].text);
+	console.log(document.getElementById("q1").selectedOptions[0].value);
+	console.log(question1Response);
+
+    console.log("Question 2 Answers:");
+	console.log(document.getElementById("q2").selectedOptions[0].text);
+	console.log(document.getElementById("q2").selectedOptions[0].value);
+	console.log(question2Response);
+
+    console.log("Question 3 Answers:");
+	console.log(document.getElementById("q3").selectedOptions[0].text);
+	console.log(document.getElementById("q3").selectedOptions[0].value);
+	console.log(question3Response);
+
+    console.log("Question 4 Answers:");
+	console.log(document.getElementById("q4").selectedOptions[0].text);
+	console.log(document.getElementById("q4").selectedOptions[0].value);
+	console.log(question4Response);
+
+    console.log("Question 5 Answers:");
+	console.log(document.getElementById("q5").selectedOptions[0].text);
+	console.log(document.getElementById("q5").selectedOptions[0].value);
+	console.log(question5Response);
+
+    // Todo: Calculate compatability scores.
+    let question1Compatability = 5 - Math.abs(question1Response - DESIRED_RESPONSE [0]);
+    let question2Compatability = 5 - Math.abs(question2Response - DESIRED_RESPONSE [1]);
+    let question3Compatability = 5 - Math.abs(question3Response - DESIRED_RESPONSE [2]);
+    let question4Compatability = 5 - Math.abs(question4Response - DESIRED_RESPONSE [3]);
+    let question5Compatability = 5 - Math.abs(question5Response - DESIRED_RESPONSE [4]);
+
+    console.log("c1="+question1Compatability);
+    console.log("c2="+question2Compatability);
+    console.log("c3="+question3Compatability);
+    console.log("c4="+question4Compatability);
+    console.log("c5="+question5Compatability);
+
+    // Calculate total compatability.
+    let totalCompatability = question1Compatability + question2Compatability + question3Compatability + question4Compatability + question5Compatability;
+
+    // Convert totalCompatability to a percentage.
+    totalCompatability *= 100 / MAX_SCORE;
+    totalCompatability = Math.round(totalCompatability);
+    console.log("totalCompatability="+ totalCompatability);
+
+    document.getElementById("compatability").innerHTML = "Your compatability is: " + totalCompatability;
+
+}
+
+
+</script>
+
+</body>
+</html>
